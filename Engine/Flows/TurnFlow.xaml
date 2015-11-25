@@ -1,0 +1,652 @@
+﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="Engine.Flows.TurnFlow"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:local="clr-namespace:Engine.Models"
+ xmlns:local1="clr-namespace:Engine.Flows"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mca="clr-namespace:Microsoft.CSharp.Activities;assembly=System.Activities"
+ xmlns:s="clr-namespace:System;assembly=mscorlib"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="Game" Type="InArgument(local:Game)" />
+    <x:Property Name="Player" Type="InArgument(local:Player)" />
+  </x:Members>
+  <local1:TurnFlow.Player>
+    <InArgument x:TypeArguments="local:Player">
+      <mca:CSharpValue x:TypeArguments="local:Player">null</mca:CSharpValue>
+    </InArgument>
+  </local1:TurnFlow.Player>
+  <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
+  <sap2010:WorkflowViewState.IdRef>Engine.Flows.TurnFlow_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Text</x:String>
+      <x:String>Engine.Models</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.ServiceModel.Activities</AssemblyReference>
+      <AssemblyReference>System.Workflow.Activities</AssemblyReference>
+      <AssemblyReference>System.Workflow.ComponentModel</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>Microsoft.CSharp</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Net.Http</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>Engine</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="TurnSinglePlayer" sap2010:WorkflowViewState.IdRef="Sequence_7">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="local:Player" Name="Oponent" />
+      <Variable x:TypeArguments="s:Random" Name="random">
+        <Variable.Default>
+          <mca:CSharpValue x:TypeArguments="s:Random">new Random()</mca:CSharpValue>
+        </Variable.Default>
+      </Variable>
+    </Sequence.Variables>
+    <If DisplayName="GetOponent" sap2010:WorkflowViewState.IdRef="If_5">
+      <If.Condition>
+        <InArgument x:TypeArguments="x:Boolean">
+          <mca:CSharpValue x:TypeArguments="x:Boolean">Player.Id == Game.PlayerA.Id</mca:CSharpValue>
+        </InArgument>
+      </If.Condition>
+      <If.Then>
+        <Assign DisplayName="Oponent=B" sap2010:WorkflowViewState.IdRef="Assign_8">
+          <Assign.To>
+            <OutArgument x:TypeArguments="local:Player">
+              <mca:CSharpReference x:TypeArguments="local:Player">Oponent</mca:CSharpReference>
+            </OutArgument>
+          </Assign.To>
+          <Assign.Value>
+            <InArgument x:TypeArguments="local:Player">
+              <mca:CSharpValue x:TypeArguments="local:Player">Game.PlayerB</mca:CSharpValue>
+            </InArgument>
+          </Assign.Value>
+        </Assign>
+      </If.Then>
+      <If.Else>
+        <Assign DisplayName="Oponent=A" sap2010:WorkflowViewState.IdRef="Assign_9">
+          <Assign.To>
+            <OutArgument x:TypeArguments="local:Player">
+              <mca:CSharpReference x:TypeArguments="local:Player">Oponent</mca:CSharpReference>
+            </OutArgument>
+          </Assign.To>
+          <Assign.Value>
+            <InArgument x:TypeArguments="local:Player">
+              <mca:CSharpValue x:TypeArguments="local:Player">Game.PlayerA</mca:CSharpValue>
+            </InArgument>
+          </Assign.Value>
+        </Assign>
+      </If.Else>
+    </If>
+    <ForEach x:TypeArguments="local:Card" DisplayName="Down Delay" sap2010:WorkflowViewState.IdRef="ForEach`1_5">
+      <ForEach.Values>
+        <InArgument x:TypeArguments="scg:IEnumerable(local:Card)">
+          <mca:CSharpValue x:TypeArguments="scg:IEnumerable(local:Card)">Player.Hand</mca:CSharpValue>
+        </InArgument>
+      </ForEach.Values>
+      <ActivityAction x:TypeArguments="local:Card">
+        <ActivityAction.Argument>
+          <DelegateInArgument x:TypeArguments="local:Card" Name="item" />
+        </ActivityAction.Argument>
+        <Sequence DisplayName="Avanzar Delay" sap2010:WorkflowViewState.IdRef="Sequence_10">
+          <If DisplayName="Solo a las que tienen Delay" sap2010:WorkflowViewState.IdRef="If_11">
+            <If.Condition>
+              <InArgument x:TypeArguments="x:Boolean">
+                <mca:CSharpValue x:TypeArguments="x:Boolean">item.Delay&gt;0</mca:CSharpValue>
+              </InArgument>
+            </If.Condition>
+            <If.Then>
+              <Assign sap2010:WorkflowViewState.IdRef="Assign_15">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:Int32">
+                    <mca:CSharpReference x:TypeArguments="x:Int32">item.Delay</mca:CSharpReference>
+                  </OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:Int32">
+                    <mca:CSharpValue x:TypeArguments="x:Int32">item.Delay -1</mca:CSharpValue>
+                  </InArgument>
+                </Assign.Value>
+              </Assign>
+            </If.Then>
+          </If>
+        </Sequence>
+      </ActivityAction>
+    </ForEach>
+    <Sequence DisplayName="Draw a Card" sap2010:WorkflowViewState.IdRef="Sequence_6">
+      <Sequence.Variables>
+        <Variable x:TypeArguments="x:Int32" Name="numero" />
+        <Variable x:TypeArguments="local:Card" Name="carta" />
+      </Sequence.Variables>
+      <If DisplayName="Solo si aun hay cartas en el mazo" sap2010:WorkflowViewState.IdRef="If_6">
+        <If.Condition>
+          <InArgument x:TypeArguments="x:Boolean">
+            <mca:CSharpValue x:TypeArguments="x:Boolean">Player.Deck.Count&gt;0</mca:CSharpValue>
+          </InArgument>
+        </If.Condition>
+        <If.Then>
+          <Sequence sap2010:WorkflowViewState.IdRef="Sequence_5">
+            <Assign sap2010:WorkflowViewState.IdRef="Assign_10">
+              <Assign.To>
+                <OutArgument x:TypeArguments="local:Card">
+                  <mca:CSharpReference x:TypeArguments="local:Card">carta</mca:CSharpReference>
+                </OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="local:Card">
+                  <mca:CSharpValue x:TypeArguments="local:Card">Player.Deck[random.Next(0, Player.Deck.Count)]</mca:CSharpValue>
+                </InArgument>
+              </Assign.Value>
+            </Assign>
+            <AddToCollection x:TypeArguments="local:Card" DisplayName="AddToCollection&lt;Card&gt;" sap2010:WorkflowViewState.IdRef="AddToCollection`1_1">
+              <AddToCollection.Item>
+                <InArgument x:TypeArguments="local:Card">
+                  <mca:CSharpValue x:TypeArguments="local:Card">carta</mca:CSharpValue>
+                </InArgument>
+              </AddToCollection.Item>
+              <InArgument x:TypeArguments="scg:ICollection(local:Card)">
+                <mca:CSharpValue x:TypeArguments="scg:ICollection(local:Card)">Player.Hand</mca:CSharpValue>
+              </InArgument>
+            </AddToCollection>
+            <RemoveFromCollection x:TypeArguments="local:Card" DisplayName="RemoveFromCollection&lt;Card&gt;" sap2010:WorkflowViewState.IdRef="RemoveFromCollection`1_1">
+              <RemoveFromCollection.Item>
+                <InArgument x:TypeArguments="local:Card">
+                  <mca:CSharpValue x:TypeArguments="local:Card">carta</mca:CSharpValue>
+                </InArgument>
+              </RemoveFromCollection.Item>
+              <InArgument x:TypeArguments="scg:ICollection(local:Card)">
+                <mca:CSharpValue x:TypeArguments="scg:ICollection(local:Card)">Player.Deck</mca:CSharpValue>
+              </InArgument>
+            </RemoveFromCollection>
+          </Sequence>
+        </If.Then>
+      </If>
+    </Sequence>
+    <While DisplayName="Emparejamos cartas" sap2010:WorkflowViewState.IdRef="While_1">
+      <While.Variables>
+        <Variable x:TypeArguments="x:Int32" Default="0" Name="contador" />
+      </While.Variables>
+      <While.Condition>
+        <mca:CSharpValue x:TypeArguments="x:Boolean">contador &lt; Player.Hand.Count</mca:CSharpValue>
+      </While.Condition>
+      <Sequence sap2010:WorkflowViewState.IdRef="Sequence_11">
+        <If DisplayName="Opuesto o null" sap2010:WorkflowViewState.IdRef="If_7">
+          <If.Condition>
+            <InArgument x:TypeArguments="x:Boolean">
+              <mca:CSharpValue x:TypeArguments="x:Boolean">contador &lt; Oponent.Hand.Count</mca:CSharpValue>
+            </InArgument>
+          </If.Condition>
+          <If.Then>
+            <Assign sap2010:WorkflowViewState.IdRef="Assign_11">
+              <Assign.To>
+                <OutArgument x:TypeArguments="local:Card">
+                  <mca:CSharpReference x:TypeArguments="local:Card">Player.Hand[contador].Oponente</mca:CSharpReference>
+                </OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="local:Card">
+                  <mca:CSharpValue x:TypeArguments="local:Card">Oponent.Hand[contador]</mca:CSharpValue>
+                </InArgument>
+              </Assign.Value>
+            </Assign>
+          </If.Then>
+          <If.Else>
+            <Assign sap2010:WorkflowViewState.IdRef="Assign_12">
+              <Assign.To>
+                <OutArgument x:TypeArguments="local:Card">
+                  <mca:CSharpReference x:TypeArguments="local:Card">Player.Hand[contador].Oponente</mca:CSharpReference>
+                </OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="local:Card">
+                  <mca:CSharpValue x:TypeArguments="local:Card">null</mca:CSharpValue>
+                </InArgument>
+              </Assign.Value>
+            </Assign>
+          </If.Else>
+        </If>
+        <Assign sap2010:WorkflowViewState.IdRef="Assign_16">
+          <Assign.To>
+            <OutArgument x:TypeArguments="x:Int32">
+              <mca:CSharpReference x:TypeArguments="x:Int32">contador</mca:CSharpReference>
+            </OutArgument>
+          </Assign.To>
+          <Assign.Value>
+            <InArgument x:TypeArguments="x:Int32">
+              <mca:CSharpValue x:TypeArguments="x:Int32">contador +1</mca:CSharpValue>
+            </InArgument>
+          </Assign.Value>
+        </Assign>
+      </Sequence>
+    </While>
+    <ForEach x:TypeArguments="local:Card" DisplayName="Combate por carta" sap2010:WorkflowViewState.IdRef="ForEach`1_4">
+      <ForEach.Values>
+        <InArgument x:TypeArguments="scg:IEnumerable(local:Card)">
+          <mca:CSharpValue x:TypeArguments="scg:IEnumerable(local:Card)">Player.Hand</mca:CSharpValue>
+        </InArgument>
+      </ForEach.Values>
+      <ActivityAction x:TypeArguments="local:Card">
+        <ActivityAction.Argument>
+          <DelegateInArgument x:TypeArguments="local:Card" Name="card" />
+        </ActivityAction.Argument>
+        <Sequence sap2010:WorkflowViewState.IdRef="Sequence_12">
+          <Sequence.Variables>
+            <Variable x:TypeArguments="x:Int32" Default="0" Name="skillValue" />
+          </Sequence.Variables>
+          <If DisplayName="Si esta activa" sap2010:WorkflowViewState.IdRef="If_12">
+            <If.Condition>
+              <InArgument x:TypeArguments="x:Boolean">
+                <mca:CSharpValue x:TypeArguments="x:Boolean">card.Delay&lt;1</mca:CSharpValue>
+              </InArgument>
+            </If.Condition>
+            <If.Then>
+              <If DisplayName="Ataca a carta o Player" sap2010:WorkflowViewState.IdRef="If_10">
+                <If.Condition>
+                  <InArgument x:TypeArguments="x:Boolean">
+                    <mca:CSharpValue x:TypeArguments="x:Boolean">card.Oponente != null</mca:CSharpValue>
+                  </InArgument>
+                </If.Condition>
+                <If.Then>
+                  <Sequence DisplayName="Ataca Carta" sap2010:WorkflowViewState.IdRef="Sequence_8">
+                    <Sequence.Variables>
+                      <Variable x:TypeArguments="x:Int32" Name="attackValue" />
+                      <Variable x:TypeArguments="scg:List(local:Skill)" Name="skills" />
+                    </Sequence.Variables>
+                    <If DisplayName="Barrier Skill" sap2010:WorkflowViewState.IdRef="If_15">
+                      <If.Condition>
+                        <InArgument x:TypeArguments="x:Boolean">
+                          <mca:CSharpValue x:TypeArguments="x:Boolean">card.Skills.FirstOrDefault(x =&gt; x.Name == "Barrier") != null</mca:CSharpValue>
+                        </InArgument>
+                      </If.Condition>
+                      <If.Then>
+                        <Sequence sap2010:WorkflowViewState.IdRef="Sequence_14">
+                          <Sequence.Variables>
+                            <Variable x:TypeArguments="scg:List(local:Card)" Name="cardsAffected" />
+                          </Sequence.Variables>
+                          <Assign sap2010:WorkflowViewState.IdRef="Assign_20">
+                            <Assign.To>
+                              <OutArgument x:TypeArguments="scg:List(local:Skill)">
+                                <mca:CSharpReference x:TypeArguments="scg:List(local:Skill)">skills</mca:CSharpReference>
+                              </OutArgument>
+                            </Assign.To>
+                            <Assign.Value>
+                              <InArgument x:TypeArguments="scg:List(local:Skill)">
+                                <mca:CSharpValue x:TypeArguments="scg:List(local:Skill)">card.Skills.Where(x =&gt; x.Name == "Barrier").ToList()</mca:CSharpValue>
+                              </InArgument>
+                            </Assign.Value>
+                          </Assign>
+                        </Sequence>
+                      </If.Then>
+                    </If>
+                    <If DisplayName="Bolt Skill" sap2010:WorkflowViewState.IdRef="If_14">
+                      <If.Condition>
+                        <InArgument x:TypeArguments="x:Boolean">
+                          <mca:CSharpValue x:TypeArguments="x:Boolean">card.Skills.SingleOrDefault(x=&gt;x.Name == "Bolt") != null</mca:CSharpValue>
+                        </InArgument>
+                      </If.Condition>
+                      <If.Then>
+                        <Sequence sap2010:WorkflowViewState.IdRef="Sequence_13">
+                          <Sequence.Variables>
+                            <Variable x:TypeArguments="local:Card" Name="cardAffected">
+                              <Variable.Default>
+                                <mca:CSharpValue x:TypeArguments="local:Card">null</mca:CSharpValue>
+                              </Variable.Default>
+                            </Variable>
+                          </Sequence.Variables>
+                          <Assign DisplayName="Bolt Value" sap2010:WorkflowViewState.IdRef="Assign_17">
+                            <Assign.To>
+                              <OutArgument x:TypeArguments="x:Int32">
+                                <mca:CSharpReference x:TypeArguments="x:Int32">skillValue</mca:CSharpReference>
+                              </OutArgument>
+                            </Assign.To>
+                            <Assign.Value>
+                              <InArgument x:TypeArguments="x:Int32">
+                                <mca:CSharpValue x:TypeArguments="x:Int32">card.Skills.SingleOrDefault(x =&gt; x.Name == "Bolt").Value</mca:CSharpValue>
+                              </InArgument>
+                            </Assign.Value>
+                          </Assign>
+                          <Assign DisplayName="Get Target Card" sap2010:WorkflowViewState.IdRef="Assign_18">
+                            <Assign.To>
+                              <OutArgument x:TypeArguments="local:Card">
+                                <mca:CSharpReference x:TypeArguments="local:Card">cardAffected</mca:CSharpReference>
+                              </OutArgument>
+                            </Assign.To>
+                            <Assign.Value>
+                              <InArgument x:TypeArguments="local:Card">
+                                <mca:CSharpValue x:TypeArguments="local:Card">Oponent.RandomHandCard(false)</mca:CSharpValue>
+                              </InArgument>
+                            </Assign.Value>
+                          </Assign>
+                          <If DisplayName="If Target Card exists" sap2010:WorkflowViewState.IdRef="If_13">
+                            <If.Condition>
+                              <InArgument x:TypeArguments="x:Boolean">
+                                <mca:CSharpValue x:TypeArguments="x:Boolean">cardAffected != null</mca:CSharpValue>
+                              </InArgument>
+                            </If.Condition>
+                            <If.Then>
+                              <Assign DisplayName="Bolted!" sap2010:WorkflowViewState.IdRef="Assign_19">
+                                <Assign.To>
+                                  <OutArgument x:TypeArguments="x:Int32">
+                                    <mca:CSharpReference x:TypeArguments="x:Int32">cardAffected.Defense</mca:CSharpReference>
+                                  </OutArgument>
+                                </Assign.To>
+                                <Assign.Value>
+                                  <InArgument x:TypeArguments="x:Int32">
+                                    <mca:CSharpValue x:TypeArguments="x:Int32">cardAffected.Defense - skillValue</mca:CSharpValue>
+                                  </InArgument>
+                                </Assign.Value>
+                              </Assign>
+                            </If.Then>
+                          </If>
+                        </Sequence>
+                      </If.Then>
+                    </If>
+                    <local1:PreAttackSkills sap2010:WorkflowViewState.IdRef="PreAttackSkills_1">
+                      <local1:PreAttackSkills.AttackValue>
+                        <OutArgument x:TypeArguments="x:Int32">
+                          <mca:CSharpReference x:TypeArguments="x:Int32">attackValue</mca:CSharpReference>
+                        </OutArgument>
+                      </local1:PreAttackSkills.AttackValue>
+                      <local1:PreAttackSkills.Attacker>
+                        <InArgument x:TypeArguments="local:Card">
+                          <mca:CSharpValue x:TypeArguments="local:Card">card</mca:CSharpValue>
+                        </InArgument>
+                      </local1:PreAttackSkills.Attacker>
+                    </local1:PreAttackSkills>
+                    <Assign sap2010:WorkflowViewState.IdRef="Assign_13">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:Int32">
+                          <mca:CSharpReference x:TypeArguments="x:Int32">card.Oponente.Defense</mca:CSharpReference>
+                        </OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:Int32">
+                          <mca:CSharpValue x:TypeArguments="x:Int32">card.Oponente.Defense - attackValue</mca:CSharpValue>
+                        </InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <If DisplayName="Carta Eliminada?" sap2010:WorkflowViewState.IdRef="If_8">
+                      <If.Condition>
+                        <InArgument x:TypeArguments="x:Boolean">
+                          <mca:CSharpValue x:TypeArguments="x:Boolean">card.Oponente.Defense&lt;1</mca:CSharpValue>
+                        </InArgument>
+                      </If.Condition>
+                      <If.Then>
+                        <RemoveFromCollection x:TypeArguments="local:Card" DisplayName="RemoveFromCollection&lt;Card&gt;" sap2010:WorkflowViewState.IdRef="RemoveFromCollection`1_2">
+                          <RemoveFromCollection.Item>
+                            <InArgument x:TypeArguments="local:Card">
+                              <mca:CSharpValue x:TypeArguments="local:Card">card.Oponente</mca:CSharpValue>
+                            </InArgument>
+                          </RemoveFromCollection.Item>
+                          <InArgument x:TypeArguments="scg:ICollection(local:Card)">
+                            <mca:CSharpValue x:TypeArguments="scg:ICollection(local:Card)">Oponent.Hand</mca:CSharpValue>
+                          </InArgument>
+                        </RemoveFromCollection>
+                      </If.Then>
+                    </If>
+                  </Sequence>
+                </If.Then>
+                <If.Else>
+                  <Sequence DisplayName="Ataca Jugador" sap2010:WorkflowViewState.IdRef="Sequence_9">
+                    <Assign sap2010:WorkflowViewState.IdRef="Assign_14">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:Int32">
+                          <mca:CSharpReference x:TypeArguments="x:Int32">Oponent.HitPoints</mca:CSharpReference>
+                        </OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:Int32">
+                          <mca:CSharpValue x:TypeArguments="x:Int32">Oponent.HitPoints - card.Attack</mca:CSharpValue>
+                        </InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <If DisplayName="Oponente eliminado?" sap2010:WorkflowViewState.IdRef="If_9">
+                      <If.Condition>
+                        <InArgument x:TypeArguments="x:Boolean">
+                          <mca:CSharpValue x:TypeArguments="x:Boolean">Oponent.HitPoints &lt; 1</mca:CSharpValue>
+                        </InArgument>
+                      </If.Condition>
+                      <If.Then>
+                        <TerminateWorkflow sap2010:WorkflowViewState.IdRef="TerminateWorkflow_1">
+                          <TerminateWorkflow.Exception>
+                            <InArgument x:TypeArguments="s:Exception">
+                              <mca:CSharpValue x:TypeArguments="s:Exception">new DeadPlayerExeption(Oponent)</mca:CSharpValue>
+                            </InArgument>
+                          </TerminateWorkflow.Exception>
+                        </TerminateWorkflow>
+                      </If.Then>
+                    </If>
+                  </Sequence>
+                </If.Else>
+              </If>
+            </If.Then>
+          </If>
+        </Sequence>
+      </ActivityAction>
+    </ForEach>
+    <sads:DebugSymbol.Symbol>d0VEOlxUcmFiYWpvXFNvbHVjaW9uZXNcU3BlbGxTdG9uZSBTaW11bGF0b3JcRW5naW5lXEZsb3dzXFR1cm5GbG93LnhhbWxgFAcUTQECNwO+Aw4CAQE8CzxVAgECQAViCgMBiwNjBYUBDwMB8AKGAQW2ARADAbkCtwEF7wENAwGCAvABBbwDDwIBB0MLQ2YDAYwDRwlSEgMBnANVCWASAwGRA2YLZmcDAYYDbQmDARQDAfECiwEHtQEMAwG6ArkBNbkBOAMBgwK+AQfuARIDAYoCvAEJvAFnAwGEAvMBC/MBZwMB/QH6AQm6AxQCAQhPD09dAwGiA0oPSmADAZ0DXQ9dXQMBlwNYD1hgAwGSA24LggEQAwHyAo4BDY4BYgMBuwKSAQuzARYDAcICvwEJ4QEOAwGYAuIBCe0BEgMBiwL8ATn8ATwCAQn+AQu5AxACAQpxEXFfAwHzAnUPgAEYAwH5ApMBDZ4BFgMB4QKfAQ2oAR8DAdICqQENsgEkAwHDAsIBD8IBbgMBmQLGAQ3RARYDAawC1AEN3wEWAwGfAuoBD+oBVwMBkgLlAQ/lAVwDAYwCgQIRgQJfAgELhQIPtwMUAgESfRV9XwMBgAN4FXhkAwH6ApsBE5sBgQEDAekClgETlgFgAwHiAqYBEaYBbQMB2gKiAROiAVgDAdMCsAERsAFtAwHLAqwBE6wBWAMBxALOARPOAWkDAbMCyQETyQF5AwGtAtwBE9wBVwMBpgLXARPXAXkDAaACiAIViAJpAgETjAITlQMeAgE6mAMTtQMeAgEakQIVqgIaAwHdAasCFekCGgIBfuoCFfUCLgIBa/YCFYEDHgIBWIIDFZQDGgIBO5kDFaQDHgIBK6UDFbQDGgIBG5QCG5QCmQEDAd4BmAIZqAIkAwHnAa4CG64ClQECAX+yAhnnAiQDAYgB8gIb8gJfAgF17QIb7QJrAgFs/gIb/gJ7AgFi+QIb+QJ1AgFZhQMbhQN0AgE8iQMZkgMwAgFFoQMboQN3AgEznAMbnANxAgEsqAMbqANyAgEcrAMZsgMtAgEjnAIbpwIkAwHoAbYCIbYCZQMBiQG6AhvFAiQDAcgBxgIb0QIkAwGzAdICG+YCIAMBkwGQAx2QA3oCAU+MAx+MA2wCAUavAx+vA38CASSkAiGkAqMBAwHzAZ8CIZ8CegMB6QHCAiHCApkBAwHTAb0CIb0CcAMByQHOAiHOAn4DAb4ByQIhyQJ1AwG0AdUCIdUCdAMBlAHZAh/kAigDAZ4B4QIl4QKDAQMBqQHcAiXcAn4DAZ8B</sads:DebugSymbol.Symbol>
+  </Sequence>
+  <sap2010:WorkflowViewState.ViewStateManager>
+    <sap2010:ViewStateManager>
+      <sap2010:ViewStateData Id="Assign_8" sap:VirtualizedContainerService.HintSize="243.2,62.4" />
+      <sap2010:ViewStateData Id="Assign_9" sap:VirtualizedContainerService.HintSize="243.2,62.4" />
+      <sap2010:ViewStateData Id="If_5" sap:VirtualizedContainerService.HintSize="888.8,52.8">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Assign_15" sap:VirtualizedContainerService.HintSize="243.2,62.4" />
+      <sap2010:ViewStateData Id="If_11" sap:VirtualizedContainerService.HintSize="200,52.8">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Sequence_10" sap:VirtualizedContainerService.HintSize="200,52.8">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ForEach`1_5" sap:VirtualizedContainerService.HintSize="888.8,52.8">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Assign_10" sap:VirtualizedContainerService.HintSize="243.2,62.4" />
+      <sap2010:ViewStateData Id="AddToCollection`1_1" sap:VirtualizedContainerService.HintSize="243.2,22.4" />
+      <sap2010:ViewStateData Id="RemoveFromCollection`1_1" sap:VirtualizedContainerService.HintSize="243.2,22.4" />
+      <sap2010:ViewStateData Id="Sequence_5" sap:VirtualizedContainerService.HintSize="200,52.8">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="If_6" sap:VirtualizedContainerService.HintSize="200,52.8">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Sequence_6" sap:VirtualizedContainerService.HintSize="888.8,52.8">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Assign_11" sap:VirtualizedContainerService.HintSize="243.2,62.4" />
+      <sap2010:ViewStateData Id="Assign_12" sap:VirtualizedContainerService.HintSize="243.2,62.4" />
+      <sap2010:ViewStateData Id="If_7" sap:VirtualizedContainerService.HintSize="243.2,52.8">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Assign_16" sap:VirtualizedContainerService.HintSize="243.2,62.4" />
+      <sap2010:ViewStateData Id="Sequence_11" sap:VirtualizedContainerService.HintSize="265.6,280">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="While_1" sap:VirtualizedContainerService.HintSize="888.8,52.8">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Assign_20" sap:VirtualizedContainerService.HintSize="243.2,62.4" />
+      <sap2010:ViewStateData Id="Sequence_14" sap:VirtualizedContainerService.HintSize="265.6,187.2">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="If_15" sap:VirtualizedContainerService.HintSize="464,432" />
+      <sap2010:ViewStateData Id="Assign_17" sap:VirtualizedContainerService.HintSize="243.2,62.4" />
+      <sap2010:ViewStateData Id="Assign_18" sap:VirtualizedContainerService.HintSize="243.2,62.4" />
+      <sap2010:ViewStateData Id="Assign_19" sap:VirtualizedContainerService.HintSize="243.2,62.4" />
+      <sap2010:ViewStateData Id="If_13" sap:VirtualizedContainerService.HintSize="243.2,52.8">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Sequence_13" sap:VirtualizedContainerService.HintSize="200,52.8">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="If_14" sap:VirtualizedContainerService.HintSize="464,212">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="PreAttackSkills_1" sap:VirtualizedContainerService.HintSize="464,22.4" />
+      <sap2010:ViewStateData Id="Assign_13" sap:VirtualizedContainerService.HintSize="464,62.4" />
+      <sap2010:ViewStateData Id="RemoveFromCollection`1_2" sap:VirtualizedContainerService.HintSize="200,22.4" />
+      <sap2010:ViewStateData Id="If_8" sap:VirtualizedContainerService.HintSize="464,52.8">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Sequence_8" sap:VirtualizedContainerService.HintSize="486.4,1066.4">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Assign_14" sap:VirtualizedContainerService.HintSize="464,62.4" />
+      <sap2010:ViewStateData Id="TerminateWorkflow_1" sap:VirtualizedContainerService.HintSize="200,22.4" />
+      <sap2010:ViewStateData Id="If_9" sap:VirtualizedContainerService.HintSize="464,212">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Sequence_9" sap:VirtualizedContainerService.HintSize="200,52.8">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="If_10" sap:VirtualizedContainerService.HintSize="711.2,1218.4">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="If_12" sap:VirtualizedContainerService.HintSize="836,1370.4">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Sequence_12" sap:VirtualizedContainerService.HintSize="858.4,1495.2">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ForEach`1_4" sap:VirtualizedContainerService.HintSize="888.8,1646.4">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Sequence_7" sap:VirtualizedContainerService.HintSize="911.2,2142.4">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Engine.Flows.TurnFlow_1" sap:VirtualizedContainerService.HintSize="951.2,2222.4" />
+    </sap2010:ViewStateManager>
+  </sap2010:WorkflowViewState.ViewStateManager>
+</Activity>
