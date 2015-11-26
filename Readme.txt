@@ -31,8 +31,7 @@
 	* 'war': sin atacante ni defensor. todos contra todos
 		* opciones:
 			-v
-			-o:algo => saca los resultados a fichero. warTotal.csv y WarDetail.csv. No los tengais bloqueados con el excel.
-			VAYA! Acabo de darme cuenta que he repetido las o´s. Que cosas, por eso no escribe bien los ficheros.
+			-out:algo => saca los resultados a fichero. warTotal.csv y WarDetail.csv. No los tengais bloqueados con el excel.
 	 'sim': intenta buscar una baraja mejor. En este caso tambien hay que copiar el fichero Inventory.csv. Modifica la baraja del atacante con las cartas del inventario.
 		* -dp:entero => numero de barajas en cada vuelta. Es aproximado, se pueden tener hasta 3 más.
 		* -w:entero => las veces que una baraja debe ser la mejor antes de dejar de buscar.
