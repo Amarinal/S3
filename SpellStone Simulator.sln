@@ -10,6 +10,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "S3Console", "S3Console\S3Console.csproj", "{3B5A9279-AFB0-4D49-9B5C-7AD10A9ACBB9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resources", "Resources", "{0894BFF5-3358-496A-9164-A7C3B1EFDAD6}"
+	ProjectSection(SolutionItems) = preProject
+		Resources\Cartas.csv = Resources\Cartas.csv
+		Resources\inventory.csv = Resources\inventory.csv
+		Resources\Players.csv = Resources\Players.csv
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

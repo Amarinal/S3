@@ -1,2 +1,0 @@
-copy "D:\Trabajo\Soluciones\SpellStone Simulator\cartas.csv" "D:\Trabajo\Soluciones\SpellStone Simulator\s3console\bin\debug\" /y
-copy "D:\Trabajo\Soluciones\SpellStone Simulator\players.csv" "D:\Trabajo\Soluciones\SpellStone Simulator\s3console\bin\debug\" /y
