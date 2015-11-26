@@ -19,6 +19,8 @@ namespace Engine.Models
 
         Card tower = null;
 
+        protected CombatOptions combatOptions;
+
         public bool IsInProgress
         {
             get
@@ -43,13 +45,19 @@ namespace Engine.Models
             this.Repeat = repeat;
         } 
 
-        public void InitCombat()
+        public void InitCombat(CombatOptions options = null)
         {
+            if (options == null) options = new CombatOptions();
+            combatOptions = options;
+
             Attacker.Init();
             Defender.Init();
+
+            foreach(Card card in combatOptions.DefenderCards) { Defender.Hand.Add(card); }
+            foreach (Card card in combatOptions.AttackerCards) { Attacker.Hand.Add(card); }
         }
 
-        public Result Resolve(int? repeat = null)
+        public Result Resolve(CombatOptions options=null, int? repeat = null)
         {
             Result result = new Result();
             result.Attacker = Attacker;
@@ -59,12 +67,24 @@ namespace Engine.Models
 
             if (repeat == null) repeat = Repeat;
 
+            if (options == null) options = new CombatOptions();
+            this.combatOptions = options;
+
             for (int i = 0; i < repeat; i++)
             {
                 turn = 0;
                 Attacker.Init();
                 Defender.Init();
 
+                foreach (Card card in combatOptions.DefenderCards)
+                {
+                    Defender.Hand.Add(card.Clone());
+                }
+
+                foreach (Card card in combatOptions.AttackerCards)
+                {
+                    Attacker.Hand.Add(card);
+                }
 
                 while (Attacker.IsAlive && Defender.IsAlive)
                 {
@@ -141,6 +161,16 @@ namespace Engine.Models
                 int nextCard = random.Next(attacker.Deck.Count);
                 attacker.Hand.Add(attacker.Deck[nextCard].Clone());
                 attacker.Deck.RemoveAt(nextCard);
+            }
+            #endregion
+
+            #region Battleeffects
+            foreach (Skill skill in combatOptions.BattleEffects)
+            {
+                foreach (Card card in attacker.CardsForHeroSkill(skill))
+                {
+                    card.TakeSkill(skill);
+                }
             }
             #endregion
 
@@ -277,7 +307,7 @@ namespace Engine.Models
                                 || name == "empower" || name == "heal"
                                 || name == "legion" || name == "fervor";
 
-            targetAttacker = targetAttacker && targetShelf;
+            targetAttacker = targetAttacker ? targetShelf : !targetShelf;
 
             return targetAttacker ? Attacker.CardsForSkill(skill, fromCard) : Defender.CardsForSkill(skill, fromCard);
         }

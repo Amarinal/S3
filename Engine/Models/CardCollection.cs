@@ -56,6 +56,8 @@ namespace Engine.Models
 
         public Card GetCard(String name, int level)
         {
+            if (string.IsNullOrWhiteSpace(name)) return null;
+
             if (level == 0) level = this.cards.Where(x => x.Name.ToLower().Trim() == name.ToLower().Trim()).Max(x => x.Level);
 
             Card card = this.cards.FirstOrDefault(x => x.Name.ToLower().Trim() == name.ToLower().Trim() && x.Level == level);

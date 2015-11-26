@@ -118,7 +118,7 @@ Id;Name;Rarity;Fuse;Level;Attack;Defense;Delay;Faction1;Faction2;Faction3;Skill1
 118;Dunetooth Demon;Epic;Single;5;2;16;3;Chaos;;Premium;Weaken,1;Pierce,3;Poison,2;;
 119;Dunetooth Devil;Epic;Dual;5;3;19;3;Chaos;;Premium;weaken All,1;Pierce,4;poison,3;;
 120;Dunetooth Rex;Epic;Quad;5;4;21;3;Chaos;;Premium;Weaken All,2;Pierce,5;poison,4;;
-121;Duoshot Ranger;Rare;Quad;4;5;10;1;Wyld;;Standard;Empower Wyld,2;Pierce,4;;;
+121;Duoshot Ranger;Rare;Quad;4;4;10;1;Wyld;;Standard;Empower Wyld,2;Pierce,2;;;
 122;Earth Elemental;Rare;Single;4;5;12;4;Wyld;Elemental;Standard;Armor,3;;;;
 123;Edge Demon;Rare;Dual;4;4;11;3;Chaos;;Standard;Vengance,2;Pierce,3;Siphon,3;;
 124;Elemental Seer;Epic;Dual;5;5;15;2;Aether;;Standard;Empower All Elemental,2;Barrier Elemental,2;Dualstrike,4;;
@@ -154,9 +154,9 @@ Id;Name;Rarity;Fuse;Level;Attack;Defense;Delay;Faction1;Faction2;Faction3;Skill1
 154;Fox Conjurer;Common;Quad;3;3;10;2;Aether;;Standard;Heal Aether,2;Weaken,2;;;
 155;Fox Trickster;Common;Single;3;2;6;2;Aether;;Standard;heal Aether,2;;;;
 156;Frog Emperor;Legendary;Single;6;5;10;2;Wyld;Frog;Premium;Armor,2;Barrier frog,3;Empower All frog,2;;
-157;Frog outrunner;Rare;Quad;4;3;13;1;Wyld;Frog;Standard;Invisibility,1;Empower Frog,4;;;
-158;Frog Patrol;Rare;Dual;4;2;11;1;Wyld;Frog;Standard;invisibility,1;Empower Frog,3;;;
-159;Frog Scout;Rare;Single;4;1;9;1;Wyld;Frog;Standard;Invisibility,1;Empower Frog,2;;;
+157;Frog outrunner;Rare;Quad;4;3;11;1;Wyld;Frog;Standard;Invisibility,1;Empower Frog,3;;;
+158;Frog Patrol;Rare;Dual;4;2;9;1;Wyld;Frog;Standard;invisibility,1;Empower Frog,2;;;
+159;Frog Scout;Rare;Single;4;2;7;1;Wyld;Frog;Standard;Invisibility,1;Empower Frog,1;;;
 160;Frog Warmage;Epic;Quad;5;5;14;2;Wyld;Frog;Premium;Invisibility,2;Armor,3;Fervor Frog,3;;
 161;Froglet Warmage;Epic;Dual;5;4;13;2;Wyld;Frog;Premium;Invisibility,1;Armor,2;Fervor Frog,2;;
 162;Frogling Army;Epic;Quad;5;5;18;2;Chaos;Frog;Premium;Invisibility,1;Legion Chaos,2;weaken All,2;;
@@ -210,7 +210,7 @@ Id;Name;Rarity;Fuse;Level;Attack;Defense;Delay;Faction1;Faction2;Faction3;Skill1
 210;Hired Ogre;Legendary;Dual;6;8;23;4;Chaos;;Premium;Vengance,4;Hex All,2;Pierce,3;;
 211;Honeycomb Dragon;Epic;Single;5;5;13;2;Wyld;Dragon;Premium;Heal Dragon,3;Freeze,6;Poison,2;;
 212;Horned Rakken;Common;Single;3;2;5;1;Chaos;;Standard;Weaken,1;;;;
-213;Hotiron Skeleton;Rare;Dual;4;4;9;1;Chaos;Undead;Standard;Bolt,2;Scorch,2;;;
+213;Hotiron Skeleton;Rare;Dual;4;3;8;1;Chaos;Undead;Standard;Bolt,1;Scorch,1;;;
 214;Hulking Squid;Epic;Dual;5;5;16;3;Wyld;;Standard;Hex,3;Freeze,4;Siphon,4;;
 215;Huntress Frog;Epic;Quad;5;7;19;3;Wyld;Frog;Premium;Heal All Frog,3;Fervor Wyld,3;Freeze,3;;
 216;Hypno Caster;Rare;Quad;4;3;16;2;Chaos;Frog;Premium;Weaken,3;weaken,4;;;
@@ -268,7 +268,7 @@ Id;Name;Rarity;Fuse;Level;Attack;Defense;Delay;Faction1;Faction2;Faction3;Skill1
 268;Mermaid Sorceress;Common;Dual;3;1;9;2;Wyld;;Standard;Heal,3;;;;
 269;Mighty Clawkin;Epic;Dual;5;6;14;2;Wyld;;Standard;Armor,1;Empower All Wyld,1;Pierce,4;;
 270;Mire Ogre;Epic;Dual;5;8;24;4;Chaos;;Premium;Vengance,3;Fervor chaos,2;Dualstrike,4;;
-271;Molten Skeleton;Rare;Single;4;3;6;1;Chaos;Undead;Standard;Bolt,2;Scorch,2;;;
+271;Molten Skeleton;Rare;Single;4;3;5;1;Chaos;Undead;Standard;Scorch,1;;;;
 272;Monstrous Squid;Epic;Quad;5;5;19;3;Wyld;;Standard;Hex,4;Freeze,3;Siphon,4;;
 273;Moss Golem;Common;Single;3;2;5;1;Wyld;;Standard;Empower,1;;;;
 274;Mountain dragon;Legendary;Quad;6;7;26;3;Wyld;Dragon;Premium;Barrier All Dragon,4;Hex,6;Siphon,6;;
@@ -305,7 +305,7 @@ Id;Name;Rarity;Fuse;Level;Attack;Defense;Delay;Faction1;Faction2;Faction3;Skill1
 305;Queen of the Swamp;Legendary;Quad;6;6;19;2;Wyld;;Premium;Invisibility,2;Hex All,2;Poison,6;;
 306;Radiance;Legendary;Single;6;4;12;2;Aether;Elemental;Premium;vengance,2;Barrier All elemental,1;Bolt,3;;
 307;Radiant Paladin;Epic;Quad;5;6;24;3;Aether;Angel;Standard;Armor,3;Heal Aether,4;Barrier All,3;;
-308;Ranger;Rare;Single;4;3;6;1;Wyld;;Standard;Empower Wyld,1;Pierce,3;;;
+308;Ranger;Rare;Single;4;3;5;1;Wyld;;Standard;Empower Wyld,1;Pierce,1;;;
 309;Ravaging Dragon;Legendary;Quad;6;6;24;3;Chaos;Dragon;Premium;Weaken,5;Poison,6;Siphon,6;;
 310;Redclaw Wraith;Rare;Dual;4;3;9;1;Chaos;Undead;Standard;Hex,1;Weaken,3;;;
 311;Retribution Angel;Legendary;Dual;6;4;11;1;Aether;Angel;Standard;Vengance,4;Scorch,1;Dualstrike every,4;;
@@ -351,7 +351,7 @@ Id;Name;Rarity;Fuse;Level;Attack;Defense;Delay;Faction1;Faction2;Faction3;Skill1
 351;Sky Knight;Common;Dual;3;2;6;1;Aether;Angel;Standard;Armor,2;;;;
 352;Sky Whale;Epic;Single;5;3;21;4;Aether;;Premium;Barrier All,2;Weaken,3;Weaken,3;;
 353;Smelted Lava Slug;Rare;Single;4;3;13;4;Chaos;;Standard;Scorch,2;Siphon,2;;;
-354;Smelted Skeleton;Rare;Quad;4;4;12;1;Chaos;Undead;Standard;Bolt,3;Scorch,2;;;
+354;Smelted Skeleton;Rare;Quad;4;4;10;1;Chaos;Undead;Standard;Bolt,2;Scorch,1;;;
 355;Smoldering Elemental;Common;Single;3;2;8;3;Chaos;Elemental;Standard;bolt,2;;;;
 356;Soaring Whale;Epic;Dual;5;4;26;4;Aether;;Premium;Barrier All,3;Weaken,4;Weaken,4;;
 357;Soul of Ash;Epic;Dual;5;4;13;2;Chaos;Elemental;Premium;Fervor elemental,3;Bolt,2;Scorch,1;;
@@ -379,7 +379,7 @@ Id;Name;Rarity;Fuse;Level;Attack;Defense;Delay;Faction1;Faction2;Faction3;Skill1
 379;Supreme Knight Frog;Legendary;Quad;6;7;16;1;Aether;Frog;Premium;Armor,3;Legion Aether,2;Bolt,2;;
 380;Swamp Ogre;Epic;Quad;5;9;29;4;Chaos;;Premium;Vengance,4;Fervor Chaos,3;Dualstrike,4;;
 381;Swift Raptor;Legendary;Quad;6;5;16;1;Aether;;Premium;Armor,3;Empower,4;Dualstrike,5;;
-382;Swiftfoot Ranger;Rare;Dual;4;4;8;1;Wyld;;Standard;empower Wyld,2;Pierce,3;;;
+382;Swiftfoot Ranger;Rare;Dual;4;3;7;1;Wyld;;Standard;empower Wyld,2;Pierce,2;;;
 383;Tadpole Warmage;Epic;Single;5;4;10;2;Wyld;Frog;Premium;Armor,1;Fervor Frog,1;;;
 384;Tar Pit Shambler;Rare;Dual;4;3;8;1;Chaos;Elemental;Premium;Fervor Elemental,1;Siphon,3;;;
 385;Tar Pit Stalker;Rare;Single;4;2;5;1;Chaos;Elemental;Premium;Fervor elemental,1;Siphon,2;;;
@@ -467,6 +467,7 @@ Id;Name;Rarity;Fuse;Level;Attack;Defense;Delay;Faction1;Faction2;Faction3;Skill1
 467;Steelskin Dragon;Epic;Single;5;7;13;2;Aether;Dragon;Premium;Armor,2;Vengance,2;Empower Dragon,3;;
 468;Plateskin Dragon;Epic;Dual;5;8;15;2;Aether;Dragon;Premium;Armor,3;Vengance,3;Empower Dragon,3;;
 469;Silverskin Dragon;Epic;Quad;5;8;18;2;Aether;Dragon;Premium;Armor,3;Vengance,4;Empower dragon,4;;
+1;Tower12;Common;Single;3;0;12;0;Neutral;;Standard;;;;;
 -10;BarrierTest;Common;Single;3;2;10;0;Aether;;Standard;Barrier,1;;;;
 -20;EmpowerTest;Common;Single;3;2;10;0;Wyld;;Standard;Empower,1;;;;
 -1;PlainWyld;Common;Single;3;2;10;0;Wyld;;Standard;;;;;

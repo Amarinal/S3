@@ -133,8 +133,9 @@ namespace Engine.Models
         {
             StringBuilder salida = new StringBuilder();
 
-            salida.AppendFormat("{0}.({2},{3},{4}).{1}", Id, Name, AttackModified, Defense, Delay);
+            salida.AppendFormat("({2}.{5},{3},{4}).{1}", Id, Name, AttackModified, Defense, Delay, Attack);
 
+            if (Barrier > 0) salida.AppendFormat(" B:{0}", Barrier);
             if (Scorch > 0) salida.AppendFormat(" S({1}):{0}", Scorch, Scorched ? "Y" : "N");
             if (Poison > 0) salida.AppendFormat(" P:{0}", Poison);
 
@@ -184,6 +185,7 @@ namespace Engine.Models
                         return;
                     }
                     Delay = 2;
+                    skill.Aux = 0;
                     break;
                 case "hex":
                     if (invisibleValue > 0)

@@ -18,6 +18,7 @@ namespace Engine.Models
         protected double winRate = -1;
         protected List<Card> cardVault;
         protected List<Player> candidates;
+        protected List<List<Card>> vaults;
         protected int repeatCombat= REPETICIONES;
 
         protected int idCounter = 0;
@@ -45,6 +46,7 @@ namespace Engine.Models
             List<Result> resultados = null;
             Game game = new Game(oponents);
             long elapsed;
+            int pos = 0;
 
             Result result = simulator.FightAll(attacker, repeatCombat);
             this.winRate = result.Wins;
@@ -54,7 +56,7 @@ namespace Engine.Models
             {
                 if (winRate > 99.9999) break;
 
-                FindCandidates(maxVariations, depth);
+                FindCandidates(maxVariations, depth, pos);
 
                 resultados = new List<Result>();
 
@@ -69,6 +71,15 @@ namespace Engine.Models
 
                 if (resultados[0].Attacker.Id != attacker.Id && resultados[0].Wins > winRate)
                 {
+                    for(int i = 0; i < candidates.Count; i++)
+                    {
+                        if (resultados[0].Attacker.Id == candidates[i].Id)
+                        {
+                            pos = i;
+                            break;
+                        }
+                    }
+
                     attacker = resultados[0].Attacker;
                     winRate = resultados[0].Wins;
                     Console.WriteLine(attacker.ToFullString());
@@ -78,6 +89,7 @@ namespace Engine.Models
                 {
                     if (times < 0) times = 0;
                     times++;
+                    pos = 0;
                 }
             }
 
@@ -85,17 +97,25 @@ namespace Engine.Models
             return attacker;
         }
 
-        public void FindCandidates(int maxVariations, int depth, string output = null)
+        public void FindCandidates(int maxVariations, int depth, int vaultPos, string output = null)
         {
             Random random = new Random();
             int variations = 0;
             this.candidates = new List<Player>();
             List<Card> varDeck;
 
+            if (vaults!=null && vaults.Count > vaultPos)
+            {
+                this.cardVault = vaults[vaultPos].Select(x => x.Clone()).ToList();
+            }
+
+            vaults = new List<List<Card>>();
+
             attacker.Init();
             varDeck = attacker.Deck.Select(x=>x.Clone()).OrderBy(x=>x.Id).ToList();
 
             candidates.Add(attacker);
+            vaults.Add(this.cardVault.Select(x => x.Clone()).OrderBy(x => x.Id).ToList());
 
             while (candidates.Count < depth)
             {
@@ -121,6 +141,9 @@ namespace Engine.Models
                 candidates.Add(new Player(--idCounter,"Groc", varDeck));
                 candidates.Add(new Player(--idCounter,"Lich", varDeck));
 
+                vaults.Add(cardVault.Select(x => x.Clone()).ToList());
+                vaults.Add(cardVault.Select(x => x.Clone()).ToList());
+                vaults.Add(cardVault.Select(x => x.Clone()).ToList());
             }
 
         }

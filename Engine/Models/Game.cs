@@ -13,6 +13,7 @@ namespace Engine.Models
     public class Game
     {
 
+        protected CombatOptions combatOptions;
         public Guid Id { get; set; }
 
         protected CardCollection cards;
@@ -108,15 +109,9 @@ namespace Engine.Models
             {
                 elapsed = DateTime.Now.Ticks;
 
-                foreach (Player defender in this.oponentes)
-                {
-                    if (attacker.Id == defender.Id) continue;
-                    Combat combat = new Combat(attacker.Clone(), defender.Clone(), repeatCombat);
-                    resultados.Add(combat.Resolve());
-                }
+                resultados.Add(FightAll(attacker, repeatCombat));
 
-
-                Console.WriteLine(string.Format("{0}.{1} ({2} battles)({3}ms)", attacker.Id, attacker.Name, repeatCombat * (this.oponentes.Count - 1), (DateTime.Now.Ticks - elapsed) / 10000));
+                Console.WriteLine(string.Format("{0}.{1} ({2} battles)({3}ms) {4:%#0.00}", attacker.Id, attacker.Name, repeatCombat * (this.oponentes.Count - 1), (DateTime.Now.Ticks - elapsed) / 10000, resultados[resultados.Count-1].Wins));
 
             }
 
@@ -134,7 +129,7 @@ namespace Engine.Models
             {
                 if (attacker.Id == defender.Id) continue;
                 Combat combat = new Combat(attacker.Clone(), defender.Clone(), repeatCombat);
-                resultado.Record(combat.Resolve());
+                resultado.Record(combat.Resolve(combatOptions));
             }
 
             return resultado;
@@ -143,24 +138,19 @@ namespace Engine.Models
 
         public void DoTurn()
         {
-            if (oponentes.Count < 2) return;
-
-            if (steppedCombat == null)
-            {
-                return;
-            }
+            if (steppedCombat == null) return;
 
             steppedCombat.StepTurn();
         }
 
-        public bool BeginSteppedCombat()
+        public bool BeginSteppedCombat(Player attacker, Player defender)
         {
-            if (oponentes.Count < 2) return false;
+            if (attacker==null || defender==null) return false;
 
             if (steppedCombat == null)
             {
-                steppedCombat = new Combat(oponentes[0], oponentes[1]);
-                steppedCombat.InitCombat();
+                steppedCombat = new Combat(attacker, defender);
+                steppedCombat.InitCombat(combatOptions);
             }
 
             return true;
@@ -238,6 +228,49 @@ namespace Engine.Models
                 Console.WriteLine("Fin.");
             }
         }
+
+        public void SetOptions(String optionString)
+        {
+            this.combatOptions = new CombatOptions();
+             
+            string[] options = optionString.Split(',');
+
+            foreach (string option in options)
+            {
+                SetOption(option.ToLower());
+            }
+        }
+
+        protected void SetOption(string option)
+        {
+
+            if (this.combatOptions == null) return;
+            Skill skill = null;
+
+            switch (option)
+            {
+                case "t":
+                case "tower":
+                    combatOptions.DefenderCards.Add(cards.GetCard("Tower", 0));
+                    break;
+                case "f":
+                case "frogs":
+                    skill = new Skill();
+                    skill.LoadSkillFromText("Barrier All Frog,2");
+                    combatOptions.BattleEffects.Add(skill);
+                    break;
+                case "d":
+                case "dragons":
+                    skill = new Skill();
+                    skill.LoadSkillFromText("Heal% All Dragon,20");
+                    combatOptions.BattleEffects.Add(skill);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+
 
     }
 }

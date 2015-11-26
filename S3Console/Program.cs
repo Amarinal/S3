@@ -19,9 +19,13 @@ namespace S3Console
             long elapsed = 0;
             int veces = 1;
             Player player = null;
+            Player defender = null;
             List<Result> resultados = new List<Result>();
             Dictionary<String, String> argumentos;
             string playersPath = null;
+            String options = null;
+            string attackerName = null;
+            string defenderName = null;
             Game game = null;
 
             while (!quitNow)
@@ -56,14 +60,35 @@ namespace S3Console
 
                 switch (command.ToLower())
                 {
+                    case "clear":
+                        game = null;
+                        player = null;
+                        defender = null;
+                        resultados = new List<Result>();
+                        playersPath = null;
+                        options = null;
+                        attackerName = null;
+                        defenderName = null;
+                        break;
                     case "c":
-                    case "combat": //combat -p:players.csv -v:1 -s
+                    case "combat": //c -a:Bambori -d:herres47 -o:t,f
+
+                        if (argumentos.Keys.Contains("a")) attackerName = argumentos["a"];
+                        if (argumentos.Keys.Contains("d")) defenderName = argumentos["d"];
+                        if (argumentos.Keys.Contains("o")) options = argumentos["o"];
+
+
 
                         if (game == null)
                         {
                             game = new Game();
                             game.LoadFromFiles(null, playersPath);
-                            game.BeginSteppedCombat();
+                            if (!string.IsNullOrWhiteSpace(options)) game.SetOptions(options);
+
+                            player = game.Oponentes.FirstOrDefault(x => x.Name == attackerName);
+                            defender = game.Oponentes.FirstOrDefault(x => x.Name == defenderName);
+
+                            game.BeginSteppedCombat(player, defender);
                         }
 
                         if (game.IsCombatInProgress) game.DoTurn();
@@ -78,10 +103,12 @@ namespace S3Console
 
                         if (argumentos.Keys.Contains("v")) veces = Convert.ToInt32(argumentos["v"]);
                         if (argumentos.Keys.Contains("p")) playersPath = argumentos["p"];
+                        if (argumentos.Keys.Contains("o")) options = argumentos["o"];
                         if (argumentos.Keys.Contains("o")) writeFiles = true;
  
                         game = new Game();
                         game.LoadFromFiles(null, playersPath);
+                        if (!string.IsNullOrWhiteSpace(options)) game.SetOptions(options);
 
                         resultados = game.War(veces);  
                         
@@ -102,7 +129,7 @@ namespace S3Console
                         int width = 2;
                         int variations = 3;
                         string inventoryPath = "inventory.csv";
-                        string simPLayer = "Yazzum";
+                        
 
                         if (argumentos.Keys.Contains("v")) veces = Convert.ToInt32(argumentos["v"]);
                         if (argumentos.Keys.Contains("dp")) depth = Convert.ToInt32(argumentos["dp"]);
@@ -110,7 +137,9 @@ namespace S3Console
                         if (argumentos.Keys.Contains("var")) variations = Convert.ToInt32(argumentos["var"]);
                         if (argumentos.Keys.Contains("p")) playersPath = argumentos["p"];
                         if (argumentos.Keys.Contains("i")) inventoryPath = argumentos["i"];
-                        if (argumentos.Keys.Contains("pl")) simPLayer = argumentos["pl"];
+                        if (argumentos.Keys.Contains("a")) attackerName = argumentos["a"];
+                        if (argumentos.Keys.Contains("o")) options = argumentos["o"];
+                        if (argumentos.Keys.Contains("d")) defenderName = argumentos["d"];
 
                         List<Card> inventory = new List<Card>();
 
@@ -123,11 +152,21 @@ namespace S3Console
                             inventory.Add(game.Cards.GetCard(file[i, "Name"], 0));
                         }
 
-                        player = game.Oponentes.FirstOrDefault(x => x.Name == simPLayer);
+                        player = game.Oponentes.FirstOrDefault(x => x.Name == attackerName);
+                        defender = game.Oponentes.FirstOrDefault(x => x.Name == defenderName);
 
                         if (player != null)
                         {
                             game.Oponentes.Remove(player);
+
+                            if (!string.IsNullOrWhiteSpace(options)) game.SetOptions(options);
+
+                            if (defender != null)
+                            {
+                                game.Oponentes.Clear();
+                                game.Oponentes.Add(defender);
+                            }
+
                             DeckFinder simDeck= new DeckFinder(game, player, game.Oponentes, inventory, veces);
 
                             player = simDeck.Search(variations, depth, width);
@@ -141,15 +180,15 @@ namespace S3Console
 
                         break;
                     case "f":
-                    case "fight":
+                    case "fight"://f -v:2 -a:Bambori -d:herres47 -o:t,f
                         elapsed = DateTime.Now.Ticks;
                         Result result;
-                        string attackerName = "Yazzum";
-                        string defenderName = null;
-                        Player defender = null;
+                        defender = null;
 
                         if (argumentos.Keys.Contains("v")) veces = Convert.ToInt32(argumentos["v"]);
-                        if (argumentos.Keys.Contains("at")) attackerName = argumentos["at"];
+                        if (argumentos.Keys.Contains("a")) attackerName = argumentos["a"];
+                        if (argumentos.Keys.Contains("d")) defenderName = argumentos["d"];
+                        if (argumentos.Keys.Contains("o")) options = argumentos["o"];
 
                         game = new Game();
                         game.LoadFromFiles();
@@ -167,6 +206,8 @@ namespace S3Console
                                 game.Oponentes.Clear();
                                 game.Oponentes.Add(defender);
                             }
+
+                            if (!string.IsNullOrWhiteSpace(options)) game.SetOptions(options);
 
                             result = game.FightAll(player, veces);
                             Console.WriteLine(string.Format("WinRatio: {0:%#0.00}. Battles:{1}", result.Wins, result.BattleCount));

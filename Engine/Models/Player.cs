@@ -105,6 +105,7 @@ namespace Engine.Models
             this.Id = line;
             this.Name = csv[line, "Name"];
             //this.HitPoints = Convert.ToInt32(csv[line, "Hitpoints"]);
+            Card card = null;
 
             string[] carta;
 
@@ -116,7 +117,8 @@ namespace Engine.Models
 
                 if (carta.Length > 1) level = Convert.ToInt32(carta[1]);
 
-                this.deckOriginal.Add(cards.GetCard(carta[0], level));
+                card = cards.GetCard(carta[0], level);
+                if (card != null) this.deckOriginal.Add(card);
             }
 
             this.deckOriginal = deckOriginal.OrderBy(x => x.Id).ToList();
@@ -188,10 +190,52 @@ namespace Engine.Models
                     Skills.Add(skill);
 
                     break;
+                case "Decim":
+                    this.HitPoints = 49;
+
+                    skill = new Skill();
+                    skill.LoadSkillFromText("Enhance All Vengance,1");
+                    Skills.Add(skill);
+                    skill = new Skill();
+                    skill.LoadSkillFromText("Bolt,1");
+                    Skills.Add(skill);
+                    skill = new Skill();
+                    skill.LoadSkillFromText("Bolt,1");
+                    Skills.Add(skill);
+
+                    break;
                 default:
-                    this.HitPoints = 50;
+                    LoadFromText(heroName);
                     break;
             }
+        }
+
+        public void LoadFromText(string heroString)
+        {
+            //Hitpoints;Skill;Skill...
+
+
+
+            try
+            {
+                string[] parts = heroString.Split('-');
+                Skill skill = null;
+                this.HitPoints = Convert.ToInt32(parts[0]);
+
+                for (int i = 1; i < parts.Length; i++)
+                {
+                    skill = new Skill();
+                    skill.LoadSkillFromText(parts[i]);
+                    Skills.Add(skill);
+                }
+            }
+            catch (Exception ex)
+            {
+                this.maxHitPoints = 0;
+                this.HitPoints = 50;
+                Skills.Clear();
+            }
+
         }
 
         public override string ToString()
