@@ -104,7 +104,7 @@ namespace S3Console
                         if (argumentos.Keys.Contains("v")) veces = Convert.ToInt32(argumentos["v"]);
                         if (argumentos.Keys.Contains("p")) playersPath = argumentos["p"];
                         if (argumentos.Keys.Contains("o")) options = argumentos["o"];
-                        if (argumentos.Keys.Contains("o")) writeFiles = true;
+                        if (argumentos.Keys.Contains("out")) writeFiles = true;
  
                         game = new Game();
                         game.LoadFromFiles(null, playersPath);

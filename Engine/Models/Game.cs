@@ -163,7 +163,7 @@ namespace Engine.Models
 
             foreach (Result result in this.resultados)
             {
-                texto.AppendFormat("{0};{1};{2:%#0.00}", result.Attacker.Name, result.Defender.Name, result.Wins);
+                texto.AppendFormat("{0};{2:%#0.00}", result.Attacker.Name, result.Wins);
                 texto.AppendLine();
             }
 
@@ -176,13 +176,9 @@ namespace Engine.Models
             Console.WriteLine("Escribiendo a fichero.");
 
             if (File.Exists(totalsPath)) File.Delete(totalsPath);
-            if (File.Exists(detailsPath)) File.Delete(detailsPath);
-
             StreamWriter total = new StreamWriter(File.OpenWrite(totalsPath));
-            StreamWriter detail = new StreamWriter(File.OpenWrite(detailsPath));
 
             total.WriteLine("Player;battles;wins;wins%;best%;worst%");
-            detail.WriteLine("Attacker;Defender;wins%");
 
             double wins = 0;
             int battles = 0;
@@ -211,10 +207,7 @@ namespace Engine.Models
                     total.WriteLine("{0};{1};{2};{3:%#0.00};{4:%#0.00};{5:%#0.00}", attacker.Name, battles, winsNumber, ((double)winsNumber) / battles, best, worst);
                 }
 
-                foreach (Result result in this.resultados)
-                {
-                    detail.WriteLine("{0};{1};{2:%#0.00}", result.Attacker.Name, result.Defender.Name, result.Wins);
-                }
+
             }
             catch
             {
@@ -224,7 +217,6 @@ namespace Engine.Models
             finally
             {
                 total.Close();
-                detail.Close();
                 Console.WriteLine("Fin.");
             }
         }
